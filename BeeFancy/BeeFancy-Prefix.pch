@@ -1,0 +1,26 @@
+//
+// Prefix header for all source files of the 'BeeFancy' target in the 'BeeFancy' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import "JSONKit.h"
+    #import "Bee.h"
+
+    #import "AppBoard_iPhone.h"
+    #import "BaseBoard_iPhone.h"
+#endif
+
+
+
+#define RANDCOLOR       [UIColor colorWithRed:(rand()%255)/255.0f    \
+green:(rand()%255)/255.0f	\
+blue:(rand()%255)/255.0f	\
+alpha:1]
