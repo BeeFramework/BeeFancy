@@ -111,7 +111,6 @@
 		E9BB0D5A171E6ED300C66BAA /* Bee_Request.m in Sources */ = {isa = PBXBuildFile; fileRef = E9BB0C17171E6ED300C66BAA /* Bee_Request.m */; };
 		E9BB0D5B171E6ED300C66BAA /* Bee_RequestQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = E9BB0C19171E6ED300C66BAA /* Bee_RequestQueue.m */; };
 		E9BB0D5C171E6ED300C66BAA /* NSObject+BeeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E9BB0C1C171E6ED300C66BAA /* NSObject+BeeRequest.m */; };
-		E9BB0D5D171E6ED300C66BAA /* 0.2.4.zip in Resources */ = {isa = PBXBuildFile; fileRef = E9BB0C1E171E6ED300C66BAA /* 0.2.4.zip */; };
 		E9BB0D5E171E6ED300C66BAA /* Bee_ActiveBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E9BB0C20171E6ED300C66BAA /* Bee_ActiveBase.m */; };
 		E9BB0D5F171E6ED300C66BAA /* Bee_ActiveRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = E9BB0C22171E6ED300C66BAA /* Bee_ActiveRecord.m */; };
 		E9BB0D60171E6ED300C66BAA /* Bee_Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = E9BB0C24171E6ED300C66BAA /* Bee_Cache.m */; };
@@ -404,7 +403,6 @@
 		E9BB0C19171E6ED300C66BAA /* Bee_RequestQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bee_RequestQueue.m; sourceTree = "<group>"; };
 		E9BB0C1B171E6ED300C66BAA /* NSObject+BeeRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+BeeRequest.h"; sourceTree = "<group>"; };
 		E9BB0C1C171E6ED300C66BAA /* NSObject+BeeRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+BeeRequest.m"; sourceTree = "<group>"; };
-		E9BB0C1E171E6ED300C66BAA /* 0.2.4.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0.2.4.zip; sourceTree = "<group>"; };
 		E9BB0C1F171E6ED300C66BAA /* Bee_ActiveBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bee_ActiveBase.h; sourceTree = "<group>"; };
 		E9BB0C20171E6ED300C66BAA /* Bee_ActiveBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bee_ActiveBase.m; sourceTree = "<group>"; };
 		E9BB0C21171E6ED300C66BAA /* Bee_ActiveRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bee_ActiveRecord.h; sourceTree = "<group>"; };
@@ -1047,7 +1045,6 @@
 		E9BB0C1D171E6ED300C66BAA /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				E9BB0C1E171E6ED300C66BAA /* 0.2.4.zip */,
 				E9BB0C1F171E6ED300C66BAA /* Bee_ActiveBase.h */,
 				E9BB0C20171E6ED300C66BAA /* Bee_ActiveBase.m */,
 				E9BB0C21171E6ED300C66BAA /* Bee_ActiveRecord.h */,
@@ -1455,7 +1452,6 @@
 				E9BB0D43171E6ED300C66BAA /* folder@2x.png in Resources */,
 				E9BB0D44171E6ED300C66BAA /* heat@2x.png in Resources */,
 				E9BB0D45171E6ED300C66BAA /* tap@2x.png in Resources */,
-				E9BB0D5D171E6ED300C66BAA /* 0.2.4.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
