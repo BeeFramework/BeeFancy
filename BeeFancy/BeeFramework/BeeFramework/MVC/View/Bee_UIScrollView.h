@@ -34,6 +34,7 @@
 
 #import "Bee_Precompile.h"
 #import "Bee_UISignal.h"
+#import "Bee_UIPullLoader.h"
 
 #pragma mark -
 
@@ -65,6 +66,7 @@
 	NSInteger					_total;
 	NSMutableArray *			_items;
 
+	BOOL						_shouldNotify;
 	BOOL						_reloaded;
 	BOOL						_reloading;
 	UIEdgeInsets				_baseInsets;
@@ -72,6 +74,13 @@
 	BOOL						_reachTop;
 	BOOL						_reachEnd;
 	NSMutableArray *			_reuseQueue;
+	
+	CGPoint						_scrollSpeed;
+	CGPoint						_lastOffset;
+	NSTimeInterval				_lastOffsetCapture;
+	
+	BeeUIPullLoader *			_headerLoader;
+	BeeUIPullLoader *			_footerLoader;
 }
 
 AS_INT( DIRECTION_HORIZONTAL )
@@ -91,8 +100,12 @@ AS_INT( DIRECTION_VERTICAL )
 @property (nonatomic, readonly) BOOL			reloading;
 @property (nonatomic, retain) NSMutableArray *	reuseQueue;
 
+@property (nonatomic, readonly) CGPoint				scrollSpeed;
 @property (nonatomic, readonly) CGFloat			scrollPercent;
 @property (nonatomic, readonly) CGFloat			height;
+
+@property (nonatomic, readonly) BeeUIPullLoader *	headerLoader;
+@property (nonatomic, readonly) BeeUIPullLoader *	footerLoader;
 
 AS_SIGNAL( RELOADED )		// 数据重新加载
 AS_SIGNAL( REACH_TOP )		// 触顶
@@ -101,6 +114,9 @@ AS_SIGNAL( REACH_BOTTOM )	// 触底
 AS_SIGNAL( DID_DRAG )
 AS_SIGNAL( DID_STOP )
 AS_SIGNAL( DID_SCROLL )
+
+AS_SIGNAL( HEADER_REFRESH )	// 下拉刷新
+AS_SIGNAL( FOOTER_REFRESH )	// 上拉刷新
 
 + (BeeUIScrollView *)spawn;
 + (BeeUIScrollView *)spawn:(NSString *)tagString;
@@ -119,6 +135,11 @@ AS_SIGNAL( DID_SCROLL )
 - (void)syncReloadData;
 - (void)asyncReloadData;
 - (void)cancelReloadData;
+
+- (void)showHeaderLoader:(BOOL)flag animated:(BOOL)animated;
+- (void)showFooterLoader:(BOOL)flag animated:(BOOL)animated;
+- (void)setHeaderLoading:(BOOL)en;
+- (void)setFooterLoading:(BOOL)en;
 
 @end
 

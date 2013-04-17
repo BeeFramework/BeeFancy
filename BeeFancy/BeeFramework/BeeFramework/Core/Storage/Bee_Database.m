@@ -2151,6 +2151,11 @@ static NSUInteger		__identSeed = 1;
 
 + (NSString *)tableNameForClass:(Class)clazz
 {
+	if ( [clazz respondsToSelector:@selector(mapTableName)] )
+	{
+		return [clazz performSelector:@selector(mapTableName)];
+	}
+
 	return [NSString stringWithFormat:@"table_%@", [clazz description]];
 }
 

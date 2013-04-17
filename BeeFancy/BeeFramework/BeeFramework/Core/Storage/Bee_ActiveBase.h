@@ -39,7 +39,8 @@
 
 @interface NSObject(BeeActiveBase)
 
-+ (void)mapRelation;	// for subclass
++ (void)mapRelation;		// for subclass
++ (NSString *)mapTableName;	// for subclass
 
 + (void)mapPropertyAsKey:(NSString *)name;
 + (void)mapPropertyAsKey:(NSString *)name defaultValue:(id)value;

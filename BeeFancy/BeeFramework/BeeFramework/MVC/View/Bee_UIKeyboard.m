@@ -56,6 +56,11 @@ DEF_NOTIFICATION( HEIGHT_CHANGED );
 @synthesize animationDuration = _animationDuration;
 @synthesize animationCurve = _animationCurve;
 
++ (void)load
+{
+    [BeeUIKeyboard sharedInstance];
+}
+
 - (id)init
 {
 	self = [super init];

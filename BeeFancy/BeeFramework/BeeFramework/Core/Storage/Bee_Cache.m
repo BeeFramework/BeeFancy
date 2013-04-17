@@ -42,7 +42,7 @@
 
 #pragma mark -
 
-#define DEFAULT_MAX_COUNT	(16)
+#define DEFAULT_MAX_COUNT	(48)
 
 #pragma mark -
 

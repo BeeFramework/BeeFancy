@@ -72,16 +72,29 @@
 @property (nonatomic, retain) BeeUIImageView *	backgroundImageView;
 @property (nonatomic, retain) UIImage *			backgroundImage;
 
-@property (assign, nonatomic) CGFloat top;
-@property (assign, nonatomic) CGFloat bottom;
-@property (assign, nonatomic) CGFloat left;
-@property (assign, nonatomic) CGFloat right;
-@property (assign, nonatomic) CGFloat width;
-@property (assign, nonatomic) CGFloat height;
+@property (assign, nonatomic) CGFloat			top;
+@property (assign, nonatomic) CGFloat			bottom;
+@property (assign, nonatomic) CGFloat			left;
+@property (assign, nonatomic) CGFloat			right;
+@property (assign, nonatomic) CGFloat			width;
+@property (assign, nonatomic) CGFloat			height;
+
+@property (assign, nonatomic) CGFloat			x;
+@property (assign, nonatomic) CGFloat			y;
+@property (assign, nonatomic) CGFloat			w;
+@property (assign, nonatomic) CGFloat			h;
+
+@property (assign, nonatomic) BOOL				visible;
 
 - (UIView *)viewWithTagString:(NSString *)value;
+- (UIView *)viewWithTagPath:(NSString *)value;
 - (UIView *)viewAtPath:(NSString *)name;
+
 - (UIView *)subview:(NSString *)name;
+- (UIView *)prevSibling;
+- (UIView *)nextSibling;
+- (void)removeAllSubviews;
+
 - (UIViewController *)viewController;
 
 + (UIView *)spawn;

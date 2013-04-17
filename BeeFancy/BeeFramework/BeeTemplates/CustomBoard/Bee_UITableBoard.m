@@ -223,6 +223,7 @@ DEF_INT( SEARCHBAR_STYLE_TOP,		1 );
 
 - (void)load
 {
+	_style = UITableViewStylePlain;
 	_baseInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
 	
 	_lastScrollPosition = CGPointZero;
@@ -243,12 +244,12 @@ DEF_INT( SEARCHBAR_STYLE_TOP,		1 );
 	if ( nil == cell )
 	{
 		cell = [[[BeeUITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:clazzName] autorelease];
-        if ( [clazz isSubclassOfClass:[BeeUIGridCell class]] )
-        {
-            cell.gridCell = [(BeeUIGridCell *)[[BeeRuntime allocByClass:clazz] init] autorelease];
-        }
+		if ( [clazz isSubclassOfClass:[BeeUIGridCell class]] )
+		{
+			cell.gridCell = [(BeeUIGridCell *)[[BeeRuntime allocByClass:clazz] init] autorelease];			
+		}
 	}
-	
+
 	return cell;
 }
 
@@ -286,8 +287,7 @@ DEF_INT( SEARCHBAR_STYLE_TOP,		1 );
 		{
 			CGRect bounds = self.viewBound;
 			_tableView = [[UITableView alloc] initWithFrame:bounds style:_style];
-			
-            if ( _style == UITableViewStylePlain )
+			if ( _style == UITableViewStylePlain )
 			{
 				_tableView.backgroundColor = [UIColor clearColor];
 			}
@@ -492,10 +492,6 @@ DEF_INT( SEARCHBAR_STYLE_TOP,		1 );
 	if ( NO == _searchBar.hidden )
 	{
 		tableFrame.size.height -= SEARCH_BAR_HEIGHT;
-        if ( BeeUITableBoard.SEARCHBAR_STYLE_TOP == _searchBarStyle )
-        {
-            tableFrame.origin.y += SEARCH_BAR_HEIGHT;
-        }
 	}
 
 	_tableView.frame = tableFrame;

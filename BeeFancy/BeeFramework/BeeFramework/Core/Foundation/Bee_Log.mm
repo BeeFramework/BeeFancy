@@ -73,7 +73,19 @@ extern "C" BOOL BeeLogIsEnabled( void )
 
 extern "C" void BeeLogIndent( NSUInteger tabs )
 {
-	__indentTabs = tabs;
+	__indentTabs += tabs;
+}
+
+extern "C" void BeeLogUnindent( NSUInteger tabs )
+{
+	if ( __indentTabs < tabs )
+	{
+		__indentTabs = 0;
+	}
+	else
+	{
+		__indentTabs -= tabs;	
+	}
 }
 
 extern "C" NSString * NSStringFormatted( NSString * format, va_list argList )

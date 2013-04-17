@@ -210,17 +210,17 @@
 
 			if ( isActiveRecord )
 			{
-				[clazzType mapProperty:propertyName forClass:className atPath:nil defaultValue:defaultValue];
+				[self mapProperty:propertyName forClass:className atPath:nil defaultValue:defaultValue];
 			}
 			else
 			{
 				if ( isPrimaryKey )
 				{
-					[clazzType mapPropertyAsKey:propertyName atPath:nil defaultValue:defaultValue];
+					[self mapPropertyAsKey:propertyName atPath:nil defaultValue:defaultValue];
 				}
 				else
 				{
-					[clazzType mapProperty:propertyName atPath:nil defaultValue:defaultValue];
+					[self mapProperty:propertyName atPath:nil defaultValue:defaultValue];
 				}
 			}
 		}
@@ -1912,8 +1912,18 @@
 	if ( nil == primaryKey )
 		return [NSArray array];
 	
-	self.FROM( table ).OFFSET( offset ).LIMIT( limit );
+	self.FROM( table );
 	
+	if ( offset )
+	{
+		self.OFFSET( offset );
+	}
+	
+	if ( limit )
+	{
+		self.LIMIT( limit );
+	}
+
 	[classType setAssociateConditions];
 	[classType setHasConditions];
 

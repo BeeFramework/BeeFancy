@@ -165,6 +165,17 @@ DEF_SIGNAL( TOUCH_UP_CANCEL )
 	return self;	
 }
 
+// thanks to @ilikeido
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if ( self )
+	{
+		[self initSelf];
+	}
+	return self;
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
 	self = [super initWithFrame:frame];

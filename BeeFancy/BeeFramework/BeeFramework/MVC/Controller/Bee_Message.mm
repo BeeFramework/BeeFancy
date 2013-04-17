@@ -417,7 +417,7 @@ DEF_INT( STATE_WAITING,		5 )
 	
 	if ( obj && [obj respondsToSelector:@selector(handleMessage:)] )
 	{
-		[obj handleMessage:self];
+		[obj performSelector:@selector(handleMessage) withObject:self];
 	}	
 }
 
@@ -738,50 +738,50 @@ DEF_INT( STATE_WAITING,		5 )
 	}
 	else if ( BeeMessage.STATE_SUCCEED == _state )
 	{
-        if ( _nextState == _state )
+		if ( _nextState == _state )
         {
-	#if defined(__BEE_DEVELOPMENT__) && __BEE_DEVELOPMENT__
-		CC( @"[SUCCEED]\n'%@'.input = \n%@\n'%@'.output = \n%@\n",
-		   _message, [_input description],
-		   _message, [_output description]
-		   );
-	#endif	// #if defined(__BEE_DEVELOPMENT__) && __BEE_DEVELOPMENT__
-		
-		[self internalStopTimer];
-		[self internalNotifySucceed];
-		
-		shouldRemove = YES;
-	}	
+		#if defined(__BEE_DEVELOPMENT__) && __BEE_DEVELOPMENT__
+			CC( @"[SUCCEED]\n'%@'.input = \n%@\n'%@'.output = \n%@\n",
+			   _message, [_input description],
+			   _message, [_output description]
+			   );
+		#endif	// #if defined(__BEE_DEVELOPMENT__) && __BEE_DEVELOPMENT__
+			
+			[self internalStopTimer];
+			[self internalNotifySucceed];
+			
+			shouldRemove = YES;
+		}
 	}
 	else if ( BeeMessage.STATE_FAILED == _state )
 	{
-        if ( _nextState == _state )
+		if ( _nextState == _state )
         {
-	#if defined(__BEE_DEVELOPMENT__) && __BEE_DEVELOPMENT__
-		CC( @"[FAILED]\n'%@'.input = \n%@\n", _message, [_input description] );
-	#endif	// #if defined(__BEE_DEVELOPMENT__) && __BEE_DEVELOPMENT__
-		
-		[self internalStopTimer];
-		[self internalNotifyFailed];	
+		#if defined(__BEE_DEVELOPMENT__) && __BEE_DEVELOPMENT__
+			CC( @"[FAILED]\n'%@'.input = \n%@\n", _message, [_input description] );
+		#endif	// #if defined(__BEE_DEVELOPMENT__) && __BEE_DEVELOPMENT__
+			
+			[self internalStopTimer];
+			[self internalNotifyFailed];	
 
-		shouldRemove = YES;
-	}
+			shouldRemove = YES;
+		}
 	}
 	else if ( BeeMessage.STATE_CANCELLED == _state )
 	{
         if ( _nextState == _state )
         {
-	#if defined(__BEE_DEVELOPMENT__) && __BEE_DEVELOPMENT__
-		CC( @"[CANCELLED]\n'%@'.input = %@", _message, [_input description] );
-	#endif	// #if defined(__BEE_DEVELOPMENT__) && __BEE_DEVELOPMENT__
-		
-		[self cancelRequests];
-		
-		[self internalStopTimer];	
-		[self internalNotifyCancelled];
+		#if defined(__BEE_DEVELOPMENT__) && __BEE_DEVELOPMENT__
+			CC( @"[CANCELLED]\n'%@'.input = %@", _message, [_input description] );
+		#endif	// #if defined(__BEE_DEVELOPMENT__) && __BEE_DEVELOPMENT__
+			
+			[self cancelRequests];
+			
+			[self internalStopTimer];	
+			[self internalNotifyCancelled];
 
-		shouldRemove = YES;
-	}
+			shouldRemove = YES;
+		}
 	}
 
 	if ( [BeeMessageQueue sharedInstance].whenUpdate )

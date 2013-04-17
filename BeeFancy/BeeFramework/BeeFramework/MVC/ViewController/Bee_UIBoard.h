@@ -51,6 +51,8 @@
 - (BeeUIBoard *)board;
 @end
 
+typedef void (^BeeUIBoardBlock)( void );
+
 #pragma mark -
 
 @interface BeeUIBoard : UIViewController<UIGestureRecognizerDelegate, UIPopoverControllerDelegate>
@@ -73,8 +75,13 @@
 	NSInteger					_stackAnimationType;
 	UIPopoverController *		_containedPopover;
 
-	UIInterfaceOrientation		_allowedOrientation;
+	BOOL						_allowedPortrait;
+	BOOL						_allowedLandscape;
 
+	BOOL						_zoomed;
+	CGRect						_zoomRect;
+	BeeUIBoardBlock				_animationBlock;
+	
 #if defined(__BEE_DEVELOPMENT__) && __BEE_DEVELOPMENT__
 	NSUInteger					_createSeq;
 	NSUInteger					_signalSeq;
@@ -113,7 +120,12 @@
 @property (nonatomic, readonly) BeeUIBoard *				previousBoard;
 @property (nonatomic, readonly) BeeUIBoard *				nextBoard;
 
-@property (nonatomic, assign) UIInterfaceOrientation		allowedOrientation;
+@property (nonatomic, assign) BOOL							allowedPortrait;
+@property (nonatomic, assign) BOOL							allowedLandscape;
+
+@property (nonatomic, assign) BOOL							zoomed;
+@property (nonatomic, assign) CGRect						zoomRect;
+@property (nonatomic, copy) BeeUIBoardBlock					animationBlock;
 
 #if defined(__BEE_DEVELOPMENT__) && __BEE_DEVELOPMENT__
 @property (nonatomic, readonly) NSUInteger					createSeq;
@@ -132,6 +144,9 @@ AS_SIGNAL( DID_APPEAR )				// 已经显示
 AS_SIGNAL( WILL_DISAPPEAR )			// 将要隐藏
 AS_SIGNAL( DID_DISAPPEAR )			// 已经隐藏
 AS_SIGNAL( ORIENTATION_CHANGED )	// 方向变化
+
+AS_SIGNAL( ANIMATION_BEGIN )		// 动画开始
+AS_SIGNAL( ANIMATION_FINISH )		// 动画结束
 
 AS_SIGNAL( MODALVIEW_WILL_SHOW )	// ModalView将要显示
 AS_SIGNAL( MODALVIEW_DID_SHOWN )	// ModalView已经显示
@@ -157,6 +172,7 @@ AS_INT( BARBUTTON_RIGHT )			// 右按钮
 
 + (NSArray *)allBoards;
 + (BeeUIBoard *)board;
++ (BeeUIBoard *)boardWithNibName:(NSString *)nibNameOrNil;
 
 - (void)load;
 - (void)unload;
@@ -173,6 +189,16 @@ AS_INT( BARBUTTON_RIGHT )			// 右按钮
 
 - (void)presentModalBoard:(BeeUIBoard *)board animated:(BOOL)animated;
 - (void)dismissModalBoardAnimated:(BOOL)animated;
+
+- (void)beginAnimation;
+- (void)commitAnimation:(BeeUIBoardBlock)block;
+
+- (void)changeAnimationCurve:(UIViewAnimationCurve)curve;
+- (void)changeAnimationDuration:(NSTimeInterval)duration;
+- (void)changeAnimationDelay:(NSTimeInterval)duration;
+
+- (void)transformZoom:(CGRect)rect;
+- (void)transformReset;
 
 @end
 

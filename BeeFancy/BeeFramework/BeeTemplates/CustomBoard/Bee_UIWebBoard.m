@@ -87,10 +87,7 @@
 	{
 		if ( [signal is:BeeUIWebView.DID_LOAD_FINISH] )
 		{
-			if ( _useHtmlDocumentTitle )
-			{
-				self.title = [self.webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-			}
+            self.title = [self.webView stringByEvaluatingJavaScriptFromString:@"document.title"];
 		}
 	}
 }

@@ -47,20 +47,37 @@
 // Global compile option
 
 #undef	BEE_VERSION
-#define BEE_VERSION				"0.2.4"
+#define BEE_VERSION				"0.3.0"
 
 #define __BEE_DEVELOPMENT__		(1)	// 是否开发模式
 #define __BEE_LOG__				(1)	// 是否打开LOG
 #define __BEE_PERFORMANCE__		(0)	// 是否开启性能测试
-#define __BEE_UNITTEST__		(0)	// 是否UnitTest
+#define __BEE_UNITTEST__		(1)	// 是否UnitTest
 
 #if TARGET_OS_IPHONE
-#define __BEE_DEBUGGER__		(1)	// 是否显示“小虫子”
+#define __BEE_DEBUGGER__		(0)	// 是否显示“小虫子”
 #define __BEE_CRASHLOG__		(0)	// （未完成）
 #define __BEE_WIREFRAME__		(1)	// 是否显示WireFrame
+#endif
+
 #define __BEE_SELECTOR_STYLE1__	(1)	// handle + ClassName
 #define __BEE_SELECTOR_STYLE2__	(1)	// handleXXX + ClassName + MethodName
-#endif
+
+// Backward compatible
+
+#undef	NSLog
+#define	NSLog							BeeLog
+
+#define UILineBreakModeWordWrap			NSLineBreakByWordWrapping
+#define UILineBreakModeCharacterWrap	NSLineBreakByCharWrapping
+#define UILineBreakModeClip				NSLineBreakByClipping
+#define UILineBreakModeHeadTruncation	NSLineBreakByTruncatingHead
+#define UILineBreakModeTailTruncation	NSLineBreakByTruncatingTail
+#define UILineBreakModeMiddleTruncation	NSLineBreakByTruncatingMiddle
+
+#define UITextAlignmentLeft				NSTextAlignmentLeft
+#define UITextAlignmentCenter			NSTextAlignmentCenter
+#define UITextAlignmentRight			NSTextAlignmentRight
 
 // Compatible with ARC
 
@@ -123,19 +140,3 @@
 	#define BEE_AUTORELEASE_POOL_END() [pool release];
 
 #endif
-
-
-#undef	NSLog
-#define	NSLog	BeeLog
-
-#define UILineBreakModeWordWrap			NSLineBreakByWordWrapping
-#define UILineBreakModeCharacterWrap	NSLineBreakByCharWrapping
-#define UILineBreakModeClip				NSLineBreakByClipping
-#define UILineBreakModeHeadTruncation	NSLineBreakByTruncatingHead
-#define UILineBreakModeTailTruncation	NSLineBreakByTruncatingTail
-#define UILineBreakModeMiddleTruncation	NSLineBreakByTruncatingMiddle
-
-#define UITextAlignmentLeft				NSTextAlignmentLeft
-#define UITextAlignmentCenter			NSTextAlignmentCenter
-#define UITextAlignmentRight			NSTextAlignmentRight
-

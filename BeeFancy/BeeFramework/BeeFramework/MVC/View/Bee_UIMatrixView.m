@@ -5,7 +5,7 @@
 //	 \ \_____\ \ \_____\ \ \_____\ 
 //	  \/_____/  \/_____/  \/_____/ 
 //
-//	Copyright (c) 2012 BEE creators
+//	Copyright (c) 2013 BEE creators
 //	http://www.whatsbug.com
 //
 //	Permission is hereby granted, free of charge, to any person obtaining a
@@ -175,13 +175,15 @@ DEF_SIGNAL( DID_SCROLL )
 @synthesize items = _items;
 
 @synthesize reachTop = _reachTop;
-@synthesize reachEnd = _reachEnd;
+@synthesize reachBottom = _reachBottom;
 @synthesize reachLeft = _reachLeft;
 @synthesize reachRight = _reachRight;
 
 @synthesize reloaded = _reloaded;
 @synthesize reloading = _reloading;
 @synthesize reuseQueue = _reuseQueue;
+
+@synthesize scrollSpeed = _scrollSpeed;
 
 + (BeeUIMatrixView *)spawn
 {
@@ -220,6 +222,7 @@ DEF_SIGNAL( DID_SCROLL )
 	_dataSource = self;
 	
 	_reloaded = NO;
+	_shouldNotify = YES;
 
     [_items release];
 	_items = [[NSMutableArray alloc] init];
@@ -235,7 +238,7 @@ DEF_SIGNAL( DID_SCROLL )
 	_colVisibleRange = NSMakeRange( 0, 0 );
 	
 	_reachTop = NO;
-	_reachEnd = NO;
+	_reachBottom = NO;
 	_reachLeft = NO;
 	_reachRight = NO;
 
@@ -324,7 +327,11 @@ DEF_SIGNAL( DID_SCROLL )
 		_reloading = NO;
 		
 		[self internalReloadData];
-		[self sendUISignal:self.RELOADED];
+		
+		if ( _shouldNotify )
+		{
+			[self sendUISignal:self.RELOADED];
+		}
 	}
 }
 
@@ -401,6 +408,8 @@ DEF_SIGNAL( DID_SCROLL )
 
 - (void)setFrame:(CGRect)frame
 {
+	_shouldNotify = NO;
+	
 	[super setFrame:frame];
 
 	if ( CGSizeEqualToSize(self.contentSize, CGSizeZero) )
@@ -408,7 +417,9 @@ DEF_SIGNAL( DID_SCROLL )
 		self.contentSize = frame.size;
 		self.contentInset = _baseInsets;
 	}
-	
+
+	_shouldNotify = YES;
+
 	if ( NO == _reloaded )
 	{
 		[self syncReloadData];
@@ -440,6 +451,18 @@ DEF_SIGNAL( DID_SCROLL )
 
 - (void)syncPositions
 {
+//	if ( self.contentOffset.x < 0 || self.contentOffset.x + self.bounds.size.width > self.contentSize.width )
+//	{
+//		if ( _colVisibleRange.length > 0 )
+//			return;
+//	}
+//
+//	if ( self.contentOffset.y < 0 || self.contentOffset.y + self.bounds.size.height > self.contentSize.height )
+//	{
+//		if ( _rowVisibleRange.length > 0 )
+//			return;
+//	}
+
 	CC( @"UIMatrixView, subviews = %d", [self.subviews count] );
 
 PERF_ENTER
@@ -448,11 +471,11 @@ PERF_ENTER
 	visibleRect.origin = self.contentOffset;
 	visibleRect.size = self.bounds.size;
 
-	NSInteger rowVisibleBegin = -1;
-	NSInteger rowVisibleEnd = -1;
+	NSInteger rowVisibleBegin = 0;
+	NSInteger rowVisibleEnd = 0;
 
-	NSInteger colVisibleBegin = -1;
-	NSInteger colVisibleEnd = -1;
+	NSInteger colVisibleBegin = 0;
+	NSInteger colVisibleEnd = 0;
 
 	for ( BeeUIMatrixRow * row in _items )
 	{
@@ -542,7 +565,11 @@ PERF_ENTER_( signal )
 	{
 		if ( NO == _reachTop )
 		{
-			[self sendUISignal:BeeUIMatrixView.REACH_TOP];
+			if ( _shouldNotify )
+			{
+				[self sendUISignal:BeeUIMatrixView.REACH_TOP];
+			}
+			
 			_reachTop = YES;
 		}			
 	}
@@ -551,18 +578,22 @@ PERF_ENTER_( signal )
 		_reachTop = NO;
 	}
 	
-	BOOL reachEnd = (_rowVisibleRange.location + _rowVisibleRange.length >= _rowTotal - 1) ? YES : NO;
-	if ( reachEnd )
+	BOOL reachBottom = (_rowVisibleRange.location + _rowVisibleRange.length >= _rowTotal - 1) ? YES : NO;
+	if ( reachBottom )
 	{
-		if ( NO == _reachEnd )
+		if ( NO == _reachBottom )
 		{
-			[self sendUISignal:BeeUIMatrixView.REACH_BOTTOM];
-			_reachEnd = YES;			
+			if ( _shouldNotify )
+			{
+				[self sendUISignal:BeeUIMatrixView.REACH_BOTTOM];
+			}
+			
+			_reachBottom = YES;
 		}
 	}
 	else
 	{
-		_reachEnd = NO;
+		_reachBottom = NO;
 	}
 	
 	BOOL reachLeft = (0 == _colVisibleRange.location) ? YES : NO;
@@ -570,7 +601,11 @@ PERF_ENTER_( signal )
 	{
 		if ( NO == _reachLeft )
 		{
-			[self sendUISignal:BeeUIMatrixView.REACH_LEFT];
+			if ( _shouldNotify )
+			{
+				[self sendUISignal:BeeUIMatrixView.REACH_LEFT];
+			}
+			
 			_reachLeft = YES;
 		}
 	}
@@ -584,7 +619,11 @@ PERF_ENTER_( signal )
 	{
 		if ( NO == _reachRight )
 		{
-			[self sendUISignal:BeeUIMatrixView.REACH_RIGHT];
+			if ( _shouldNotify )
+			{
+				[self sendUISignal:BeeUIMatrixView.REACH_RIGHT];
+			}
+			
 			_reachRight = YES;
 		}
 	}
@@ -658,8 +697,27 @@ PERF_LEAVE
 //		}
 //	}
 
-	[self sendUISignal:self.DID_SCROLL];
+	if ( _shouldNotify )
+	{
+		[self sendUISignal:self.DID_SCROLL];
+	}
+	
 	[self syncPositions];
+
+	CGPoint			currentOffset = self.contentOffset;
+    NSTimeInterval	currentTime = [NSDate timeIntervalSinceReferenceDate];
+    NSTimeInterval	timeDiff = currentTime - _lastOffsetCapture;
+
+    if ( timeDiff > 0.1 )
+	{
+		_scrollSpeed.x = ((currentOffset.x - _lastOffset.x) / 1000.0f);
+		_scrollSpeed.y = ((currentOffset.y - _lastOffset.y) / 1000.0f);
+		
+        _lastOffset = currentOffset;
+        _lastOffsetCapture = currentTime;
+    }
+
+	CC( @"scrollSpeed = (%f, %f)", _scrollSpeed.x, _scrollSpeed.y );
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -707,7 +765,34 @@ PERF_LEAVE
 //		}
 //	}
 	
-	[self sendUISignal:self.DID_STOP];
+	if ( NO == decelerate )
+	{
+		if ( _shouldNotify )
+		{
+			[self sendUISignal:self.DID_STOP];
+		}
+
+		if ( self.contentOffset.x < 0 )
+		{
+			_reachLeft = NO;
+		}
+		
+		if ( self.contentOffset.x + self.bounds.size.width >= self.contentSize.width )
+		{
+			_reachRight = NO;
+		}
+		
+		if ( self.contentOffset.y < 0 )
+		{
+			_reachTop = NO;
+		}
+		
+		if ( self.contentOffset.y + self.bounds.size.height >= self.contentSize.height )
+		{
+			_reachBottom = NO;
+		}
+	}
+	
 	[self syncPositions];
 }
 
@@ -718,7 +803,11 @@ PERF_LEAVE
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-	[self sendUISignal:self.DID_STOP];
+	if ( _shouldNotify )
+	{
+		[self sendUISignal:self.DID_STOP];
+	}
+	
 	[self syncPositions];
 }
 

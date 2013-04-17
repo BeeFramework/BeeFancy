@@ -269,6 +269,19 @@ DEF_INT( ANIMATION_TYPE_FLIP,		5 )
 		}
 		else if ( BeeUIStack.ANIMATION_TYPE_FLIP == type )
 		{
+			CATransition *animation = [CATransition animation];
+			animation.duration = 0.6f;
+			animation.timingFunction = UIViewAnimationCurveEaseInOut;
+			animation.fillMode = kCAFillModeForwards;
+			animation.type = @"flip";
+			animation.subtype = @"fromLeft";
+			animation.startProgress = 0.0f;
+			animation.endProgress = 1.0f;
+			animation.removedOnCompletion = YES;
+			[self.view.layer removeAnimationForKey:@"flip"];
+			[self.view.layer addAnimation:animation forKey:@"flip"];
+			
+			[super pushViewController:newBoard animated:NO];
 		}
 	}
 		
@@ -364,7 +377,20 @@ DEF_INT( ANIMATION_TYPE_FLIP,		5 )
 		}
 		else if ( BeeUIStack.ANIMATION_TYPE_FLIP == animType )
 		{
+			[super popViewControllerAnimated:NO];
 			
+			CATransition *animation = [CATransition animation];
+			animation.delegate = self;
+			animation.duration = 0.6f;
+			animation.timingFunction = UIViewAnimationCurveEaseInOut;
+			animation.fillMode = kCAFillModeForwards;
+			animation.type = @"flip";
+			animation.subtype = @"fromRight";
+			animation.startProgress = 0.0f;
+			animation.endProgress = 1.0f;
+			animation.removedOnCompletion = NO;
+			[self.view.layer removeAnimationForKey:@"flip"];
+			[self.view.layer addAnimation:animation forKey:@"flip"];
 		}
 	}
 }

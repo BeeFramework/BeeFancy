@@ -203,58 +203,54 @@ DEF_SIGNAL( INDEX_CHANGED );
 
 - (void)handleUISignal:(BeeUISignal *)signal
 {
-	if ( signal.source != self )
+	[super handleUISignal:signal];
+
+	if ( signal.source == self )
 	{
-		BeeUIStack * stack = self.topStack;
-		if ( stack )
-		{
-			[signal forward:stack];
-		}
-	}
-	else
-	{
-		[super handleUISignal:signal];
-		
 		if ( [signal isKindOf:BeeUIBoard.SIGNAL] )
 		{
 			if ( [signal is:BeeUIBoard.WILL_APPEAR] )
 			{
 				for ( BeeUIStack * stack in _stacks )
 				{
-					[stack viewWillAppear:NO];
+					if ( [stack isViewLoaded] && NO == stack.view.hidden )
+					{
+						[stack viewWillAppear:NO];	
+					}
 				}
 			}
 			else if ( [signal is:BeeUIBoard.DID_APPEAR] )
 			{
 				for ( BeeUIStack * stack in _stacks )
 				{
-					[stack viewDidAppear:NO];
+					if ( [stack isViewLoaded] && NO == stack.view.hidden )
+					{
+						[stack viewDidAppear:NO];
+					}
 				}
 			}
 			else if ( [signal is:BeeUIBoard.WILL_DISAPPEAR] )
 			{
 				for ( BeeUIStack * stack in _stacks )
 				{
-					[stack viewWillDisappear:NO];
+					if ( [stack isViewLoaded] && NO == stack.view.hidden )
+					{
+						[stack viewWillDisappear:NO];
+					}
 				}
 			}
 			else if ( [signal is:BeeUIBoard.DID_DISAPPEAR] )
 			{
 				for ( BeeUIStack * stack in _stacks )
 				{
-					[stack viewDidDisappear:NO];
+					if ( [stack isViewLoaded] && NO == stack.view.hidden )
+					{
+						[stack viewDidDisappear:NO];
+					}
 				}
 			}
 		}
 	}
-}
-
-- (void)handleUISignal_UIView:(BeeUISignal *)signal
-{
-    if ( self.parentBoard && [self.parentBoard respondsToSelector:@selector(handleUISignal_UIView:)] )
-    {
-        [self.parentBoard performSelector:@selector(handleUISignal_UIView:) withObject:signal];
-    }
 }
 
 @end

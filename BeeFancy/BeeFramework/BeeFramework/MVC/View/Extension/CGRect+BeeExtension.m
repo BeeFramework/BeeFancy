@@ -116,6 +116,27 @@ CGRect AspectFillRect( CGRect rect, CGRect bound )
 	return newRect;
 }
 
+CGRect CGRectFromString( NSString * str )
+{
+	CGRect rect = CGRectZero;
+	
+	NSArray * array = [str componentsSeparatedByString:@","];
+	if ( array && array.count == 4 )
+	{
+		NSString *	x = [array objectAtIndex:0];
+		NSString *	y = [array objectAtIndex:1];
+		NSString *	w = [array objectAtIndex:2];
+		NSString *	h = [array objectAtIndex:3];
+		
+		rect.origin.x = x.floatValue;
+		rect.origin.y = y.floatValue;
+		rect.size.width = w.floatValue;
+		rect.size.height = h.floatValue;
+	}
+	
+	return rect;
+}
+
 CGPoint CGPointZeroNan( CGPoint point )
 {
 	point.x = isnan( point.x ) ? 0.0f : point.x;

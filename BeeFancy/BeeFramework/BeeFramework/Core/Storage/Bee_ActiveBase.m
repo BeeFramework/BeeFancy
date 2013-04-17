@@ -68,6 +68,11 @@ static NSMutableDictionary * __flags = nil;
 {
 }
 
++ (NSString *)mapTableName
+{
+	return [NSString stringWithUTF8String:class_getName(self)];
+}
+
 + (void)mapPropertyAsKey:(NSString *)name
 {
 	[self addProtperty:name

@@ -50,6 +50,7 @@
 
 @interface BeeUIGridCell : UIView
 {
+	BOOL		_selected;
 	id			_cellData;
 	NSObject *	_cellLayout;
 }
@@ -59,6 +60,8 @@
 
 @property (nonatomic, readonly) NSArray *		childCells;
 @property (nonatomic, readonly) BeeUIGridCell *	superCell;
+
+@property (nonatomic, assign) BOOL				selected;
 
 - (void)load;
 - (void)unload;
@@ -70,6 +73,9 @@
 
 - (void)layoutWillBegin;
 - (void)layoutDidFinish;
+
+- (void)stateWillChange;
+- (void)stateDidChanged;
 
 @end
 

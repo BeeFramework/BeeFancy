@@ -94,7 +94,6 @@ DEF_SIGNAL( PAN_CANCELLED )
 
 - (void)didPan:(UIPanGestureRecognizer *)panGesture
 {
-    
 	CGPoint panOffset = [panGesture translationInView:self];
 	CC( @"panOffset = (%.0f, %.0f)", panOffset.x, panOffset.y );
 	

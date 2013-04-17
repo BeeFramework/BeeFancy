@@ -5,7 +5,7 @@
 //	 \ \_____\ \ \_____\ \ \_____\ 
 //	  \/_____/  \/_____/  \/_____/ 
 //
-//	Copyright (c) 2012 BEE creators
+//	Copyright (c) 2013 BEE creators
 //	http://www.whatsbug.com
 //
 //	Permission is hereby granted, free of charge, to any person obtaining a
@@ -59,8 +59,9 @@
 
 	NSMutableArray *			_items;
 
+	BOOL						_shouldNotify;
 	BOOL						_reachTop;
-	BOOL						_reachEnd;
+	BOOL						_reachBottom;
 	BOOL						_reachLeft;
 	BOOL						_reachRight;
 
@@ -69,6 +70,10 @@
 	UIEdgeInsets				_baseInsets;
 	
 	NSMutableArray *			_reuseQueue;
+
+	CGPoint						_scrollSpeed;
+	CGPoint						_lastOffset;
+	NSTimeInterval				_lastOffsetCapture;
 }
 
 @property (nonatomic, assign) id					dataSource;
@@ -82,13 +87,15 @@
 @property (nonatomic, readonly) NSMutableArray *	items;
 
 @property (nonatomic, readonly) BOOL				reachTop;
-@property (nonatomic, readonly) BOOL				reachEnd;
+@property (nonatomic, readonly) BOOL				reachBottom;
 @property (nonatomic, readonly) BOOL				reachLeft;
 @property (nonatomic, readonly) BOOL				reachRight;
 
 @property (nonatomic, assign) BOOL					reloaded;
 @property (nonatomic, readonly) BOOL				reloading;
 @property (nonatomic, retain) NSMutableArray *		reuseQueue;
+
+@property (nonatomic, readonly) CGPoint				scrollSpeed;
 
 AS_SIGNAL( RELOADED )		// 数据重新加载
 AS_SIGNAL( REACH_TOP )		// 触顶

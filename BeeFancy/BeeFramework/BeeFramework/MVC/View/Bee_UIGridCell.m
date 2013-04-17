@@ -60,6 +60,8 @@
 
 @implementation BeeUIGridCell
 
+@dynamic selected;
+
 @dynamic cellData;
 @dynamic cellLayout;
 
@@ -75,6 +77,8 @@
 
 	_cellData = nil;
 	_cellLayout = self;
+	
+	_selected = NO;
 }
 
 - (id)init
@@ -246,6 +250,23 @@
 	}
 }
 
+- (BOOL)selected
+{
+	return _selected;
+}
+
+- (void)setSelected:(BOOL)en
+{
+	if ( en != _selected )
+	{
+		[self stateWillChange];
+		
+		_selected = en;
+		
+		[self stateDidChanged];
+	}
+}
+
 - (void)dataWillChange
 {
 }
@@ -260,6 +281,16 @@
 
 - (void)layoutDidFinish
 {
+}
+
+- (void)stateWillChange
+{
+	
+}
+
+- (void)stateDidChanged
+{
+	
 }
 
 @end

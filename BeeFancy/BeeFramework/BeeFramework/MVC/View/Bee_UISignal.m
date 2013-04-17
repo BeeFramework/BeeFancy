@@ -46,7 +46,7 @@
 #undef	MAX_POOL_SIZE
 #define MAX_POOL_SIZE	(8)
 
-#define __USE_FOREIGN__	(0)
+#define __USE_FOREIGN__	(1)
 
 #pragma mark - 
 
@@ -98,6 +98,7 @@
 @synthesize namePrefix = _namePrefix;
 @synthesize object = _object;
 @synthesize returnValue = _returnValue;
+@synthesize preSelector = _preSelector;
 
 @synthesize initTimeStamp = _initTimeStamp;
 @synthesize sendTimeStamp = _sendTimeStamp;
@@ -234,17 +235,17 @@ DEF_STATIC_PROPERTY( NO_VALUE );
 			if ( [targetClassName isEqualToString:self.namePrefix] )
 			{
 				self.source = target;
-			}
-            else
-			{
-				Class targetClass = NSClassFromString( targetClassName );
-				Class sourceClass = NSClassFromString( self.namePrefix );
-				
-				if ( sourceClass == targetClass || [targetClass isSubclassOfClass:sourceClass] )
-				{
-					self.source = target;
-				}
-			}
+			}	
+//			else
+//			{
+//				Class targetClass = NSClassFromString( targetClassName );
+//				Class sourceClass = NSClassFromString( self.namePrefix );
+//				
+//				if ( sourceClass == targetClass || [targetClass isSubclassOfClass:sourceClass] )
+//				{
+//					self.source = target;
+//				}
+//			}
 		}
 	}
 #endif	// #if __USE_FOREIGN__
@@ -268,6 +269,22 @@ DEF_STATIC_PROPERTY( NO_VALUE );
 
 - (void)routes
 {
+// forward signal to user specialized signal handler first
+	
+	if ( _preSelector && _preSelector.length )
+	{
+		NSString *	selectorName = [NSString stringWithFormat:@"handleUISignal_%@:", _preSelector];
+		SEL			selector = NSSelectorFromString(selectorName);
+
+		if ( [_target respondsToSelector:selector] )
+		{
+			[_target performSelector:selector withObject:self];
+			return;
+		}
+	}
+
+// then guess signal handler
+	
 	NSArray * array = [_name componentsSeparatedByString:@"."];
 	if ( array && array.count > 1 )
 	{
@@ -425,6 +442,8 @@ DEF_STATIC_PROPERTY( NO_VALUE );
 
 	[_object release];
 	[_returnValue release];
+	
+	[_preSelector release];
 	
 	[super dealloc];
 }

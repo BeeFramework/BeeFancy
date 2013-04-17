@@ -32,6 +32,7 @@
 
 #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
 
+#import "Bee_UISignal.h"
 #import "Bee_UIActionSheet.h"
 #import "Bee_UIAlertView.h"
 #import "Bee_UIActivityIndicatorView.h"

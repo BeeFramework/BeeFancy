@@ -564,7 +564,7 @@ DEF_SIGNAL( DID_DISAPPEAR );
 												  target:self
 												selector:@selector(dismiss)
 												userInfo:nil
-												 repeats:NO];
+												 repeats:NO];		
 	}	
 
 	[self sendUISignal:BeeUITipsView.DID_APPEAR];
@@ -654,7 +654,16 @@ DEF_SIGNAL( DID_DISAPPEAR );
 		_bubbleView = [[UIImageView alloc] initWithFrame:CGRectZero];
 		_bubbleView.backgroundColor = [UIColor clearColor];
 		_bubbleView.contentMode = UIViewContentModeCenter;
-		_bubbleView.image = [BeeUITipsCenter sharedInstance].bubble.stretched;
+		if ( [BeeUITipsCenter sharedInstance].bubble )
+		{
+			_bubbleView.image = [BeeUITipsCenter sharedInstance].bubble.stretched;
+		}
+		else
+		{
+			_bubbleView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
+			_bubbleView.layer.masksToBounds = YES;
+			_bubbleView.layer.cornerRadius = 4.0f;
+		}
 		[self addSubview:_bubbleView];
 
 		_iconView = [[UIImageView alloc] initWithFrame:CGRectZero];
@@ -740,7 +749,16 @@ DEF_SIGNAL( DID_DISAPPEAR );
 		_bubbleView = [[UIImageView alloc] initWithFrame:CGRectZero];
 		_bubbleView.backgroundColor = [UIColor clearColor];
 		_bubbleView.contentMode = UIViewContentModeCenter;
-		_bubbleView.image = [BeeUITipsCenter sharedInstance].bubble.stretched;
+		if ( [BeeUITipsCenter sharedInstance].bubble )
+		{
+			_bubbleView.image = [BeeUITipsCenter sharedInstance].bubble.stretched;
+		}
+		else
+		{
+			_bubbleView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
+			_bubbleView.layer.masksToBounds = YES;
+			_bubbleView.layer.cornerRadius = 4.0f;
+		}
 		[self addSubview:_bubbleView];
 		
 		_indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectZero];
@@ -814,7 +832,16 @@ DEF_SIGNAL( DID_DISAPPEAR );
 		_bubbleView = [[UIImageView alloc] initWithFrame:CGRectZero];
 		_bubbleView.backgroundColor = [UIColor clearColor];
 		_bubbleView.contentMode = UIViewContentModeCenter;
-		_bubbleView.image = [BeeUITipsCenter sharedInstance].bubble.stretched;
+		if ( [BeeUITipsCenter sharedInstance].bubble )
+		{
+			_bubbleView.image = [BeeUITipsCenter sharedInstance].bubble.stretched;
+		}
+		else
+		{
+			_bubbleView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
+			_bubbleView.layer.masksToBounds = YES;
+			_bubbleView.layer.cornerRadius = 4.0f;
+		}
 		[self addSubview:_bubbleView];
 		
 		_indicator = [[UIProgressView alloc] initWithFrame:CGRectZero];

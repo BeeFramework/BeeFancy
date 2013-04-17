@@ -83,6 +83,17 @@ DEF_SIGNAL( HIGHLIGHT_CHANGED )
     return self;
 }
 
+// thanks to @ilikeido
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+	self = [super initWithCoder:aDecoder];
+	if ( self )
+	{
+		[self initSelf];
+	}
+	return self;
+}
+
 - (void)initSelf
 {
 	self.opaque = NO;

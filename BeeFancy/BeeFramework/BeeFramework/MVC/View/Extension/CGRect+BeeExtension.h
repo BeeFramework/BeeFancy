@@ -45,6 +45,8 @@ CGRect	AspectFitRect( CGRect rect, CGRect bound );
 CGSize	AspectFillSize( CGSize size, CGSize bound );
 CGRect	AspectFillRect( CGRect rect, CGRect bound );
 
+CGRect	CGRectFromString( NSString * str );
+
 CGPoint	CGPointZeroNan( CGPoint point );
 CGSize	CGSizeZeroNan( CGSize size );
 CGRect	CGRectZeroNan( CGRect rect );

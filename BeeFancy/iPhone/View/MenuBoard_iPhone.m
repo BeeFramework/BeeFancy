@@ -115,8 +115,9 @@
 	}
 	else if ( [signal is:BeeUIBoard.LAYOUT_VIEWS] )
 	{
-        self.tableView.width = self.view.width;
         self.searchBar.width = self.view.width;
+        self.tableView.width = self.view.width;
+        self.tableView.top = self.searchBar.bottom;
 	}
     else if ( [signal is:BeeUIBoard.WILL_APPEAR] )
     {

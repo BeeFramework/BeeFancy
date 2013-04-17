@@ -79,14 +79,14 @@ DEF_NOTIFICATION( BACKGROUND_CHANGED )
 
 - (void)initSelf
 {
-	[self setBarStyle:UIBarStyleBlackOpaque];
-	[self observeNotification:BeeUINavigationBar.BACKGROUND_CHANGED];
+		[self setBarStyle:UIBarStyleBlackOpaque];
+		[self observeNotification:BeeUINavigationBar.BACKGROUND_CHANGED];
 	
-//	self.layer.masksToBounds = YES;
-//	self.layer.shadowColor = [UIColor blackColor].CGColor;
-//	self.layer.shadowOffset = CGSizeMake(0, 1);
-//	self.layer.shadowRadius = 1.0f;
-//	self.layer.shadowOpacity = 0.6;
+	self.layer.masksToBounds = NO;
+	self.layer.shadowColor = [UIColor blackColor].CGColor;
+	self.layer.shadowOffset = CGSizeMake(0, 2);
+	self.layer.shadowRadius = 0.6f;
+	self.layer.shadowOpacity = 0.6f;
 }
 
 - (void)dealloc

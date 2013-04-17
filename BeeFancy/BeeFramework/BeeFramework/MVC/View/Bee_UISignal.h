@@ -67,6 +67,7 @@
 	NSString *			_namePrefix;
 	NSObject *			_object;
 	NSObject *			_returnValue;
+	NSString *			_preSelector;
 
 	NSTimeInterval		_initTimeStamp;
 	NSTimeInterval		_sendTimeStamp;
@@ -89,6 +90,7 @@
 @property (nonatomic, retain) NSString *		namePrefix;		// Signal前辍
 @property (nonatomic, retain) NSObject *		object;			// 附带参数
 @property (nonatomic, retain) NSObject *		returnValue;	// 返回值，默认为空
+@property (nonatomic, retain) NSString *		preSelector;	// 返回值，默认为空
 
 @property (nonatomic, assign) NSTimeInterval	initTimeStamp;
 @property (nonatomic, assign) NSTimeInterval	sendTimeStamp;
