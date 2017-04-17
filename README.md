@@ -1,16 +1,16 @@
-#BeeFramework - BeeFancy
+# BeeFramework - BeeFancy
 
-##Coming Soooon~
+## Coming Soooon~
 
 **BeeEsty** is coming in 2 weeks ~
 
-##Thanks To
+## Thanks To
 * [Gavinkwoe](https://github.com/gavinkwoe)  
 * [BeeFramework](https://github.com/gavinkwoe/BeeFramework/)
 * [GeekZoo](http://www.geek-zoo.com)
 
 
-##Previews
+## Previews
 
 <table>
 <thead>
@@ -89,7 +89,7 @@
 </tbody>
 </table>
 
-##Skeleton
+## Skeleton
 
 ```
 Welcome  
